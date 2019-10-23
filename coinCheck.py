@@ -57,11 +57,22 @@ print("Tare done! Add weight now...")
 
 #takes in the weight of the coin jar as a reference
 currentJar = hx.get_weight(5)
-#sets the coin values equal to their stored values in the exterior file
-#penny =
-#nickel =
-#dime =
-#quarter =
+#open file
+f= open("Coins.txt", 'r')
+#initialize the list
+Coins = []
+#read each line and add it to the list
+fl = f.readlines()
+for x in fl:
+	Coins.append(int(x))
+#closes file to preserve memory
+f.close()
+
+#moves data to local variables
+pennies = Coins[0]
+nickels = Coins[1]
+dimes = Coins[2]
+quarters = Coins[3]
 
 while True:
     try:
@@ -76,22 +87,22 @@ while True:
 			#checks the coinWeight against the weights of each coin type to determine its type
 			#checks in a range of .1 grams away from the expected weight of the coin for expected error
 			if ((coinWeight >= 2.4) and (coinWeight <= 2.6)):
-				#penny += 1
+				pennies += 1
 				currentJar = hx.get_weight(5)
 				break
 				print "{} is a penny".format(coinWeight)
 			elif ((coinWeight >= 4.9) and (coinWeight <= 5.1)):
-				#nickel += 1
+				nickels += 1
 				currentJar = hx.get_weight(5)
 				print "{} is a nickel".format(coinWeight)
 				break
 			elif ((coinWeight >= 2.168) and (coinWeight <= 2.368)):
-				#dime += 1
+				dimes += 1
 				currentJar = hx.get_weight(5)
 				print "{} is a dime".format(coinWeight)
 				break
 			elif ((coinWeight >= 11.24) and (coinWeight <= 11.44)):
-				#quarter += 1
+				quarters += 1
 				currentJar = hx.get_weight(5)
 				print "{} is a quarter".format(coinWeight)
 				break
@@ -105,6 +116,9 @@ while True:
 					time.sleep(1)
 					print "waiting"
 					
+			#writes down the # of each coin in external file
+			f = open("Coins.txt", 'w')
+			f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
 
         hx.power_down()
         hx.power_up()
