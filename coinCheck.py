@@ -55,80 +55,120 @@ print("Tare done! Add weight now...")
 #hx.tare_A()
 #hx.tare_B()
 
-#takes in the weight of the coin jar as a reference
-currentJar = hx.get_weight(5)
-#open file
-f= open("Coins.txt", 'r')
-#initialize the list
-Coins = []
-#read each line and add it to the list
-fl = f.readlines()
-for x in fl:
-	Coins.append(int(x))
-#closes file to preserve memory
-f.close()
+#add function to calc # of coins of a certain type added
+#type determined by #, 0-penny:1-nickel:2-dime:3-quarter
+def coinCalc(type):
+	#takes in the weight of the coin jar as a reference
+	currentJar = hx.get_weight(5)
+	#open file
+	f= open("Coins.txt", 'r')
+	#initialize the list
+	Coins = []
+	#read each line and add it to the list
+	fl = f.readlines()
+	for x in fl:
+		Coins.append(int(x))
+	#closes file to preserve memory
+	f.close()
 
-#moves data to local variables
-pennies = Coins[0]
-nickels = Coins[1]
-dimes = Coins[2]
-quarters = Coins[3]
+	#moves data to local variables
+	pennies = Coins[0]
+	nickels = Coins[1]
+	dimes = Coins[2]
+	quarters = Coins[3]
 
-while True:
-    try:
-        #starts the loop by checking the new weight relative to the initial
-        newJar = hx.get_weight(5)
-        if (newJar > currentJar):
-			#pause for a second to let the coin setle
-			time.sleep(1)
-			# if chenge in weight, calculated the weight of the new addition (the new coin)
-			coinWeight = newJar-currentJar
+
+	while True:
+		try:
+			#starts the loop by checking the new weight relative to the initial
+			newJar = hx.get_weight(5)
+			if (newJar > currentJar):
+				#pause for a second to let the coin setle
+				time.sleep(1)
+				# if chenge in weight, calculated the weight of the new addition (the new coin)
+				coinWeight = newJar-currentJar
 		
-			#checks the coinWeight against the weights of each coin type to determine its type
-			#checks in a range of .1 grams away from the expected weight of the coin for expected error
-			if ((coinWeight >= 2.4) and (coinWeight <= 2.6)):
-				pennies += 1
-				currentJar = hx.get_weight(5)
-				break
-				print "{} is a penny".format(coinWeight)
-			elif ((coinWeight >= 4.9) and (coinWeight <= 5.1)):
-				nickels += 1
-				currentJar = hx.get_weight(5)
-				print "{} is a nickel".format(coinWeight)
-				break
-			elif ((coinWeight >= 2.168) and (coinWeight <= 2.368)):
-				dimes += 1
-				currentJar = hx.get_weight(5)
-				print "{} is a dime".format(coinWeight)
-				break
-			elif ((coinWeight >= 11.24) and (coinWeight <= 11.44)):
-				quarters += 1
-				currentJar = hx.get_weight(5)
-				print "{} is a quarter".format(coinWeight)
-				break
-			elif (coinWeight < 2.167):
-				#the weight wasnt a coin but some small change, so it should ignore it and go back to the loop
-				pass
-			elif (coinWeight > 11.45):
-				#too large and should produce an error message
-				print "Could not identify coin, please remove and try placing the coins in one at a time."
-				while (newJar > currentJar):
-					time.sleep(1)
-					print "waiting"
+				#checks the coinWeight against the weights of each coin type to determine its type
+				#checks in a range of .1 grams away from the expected weight of the coin for expected error
+				if (type == 0):
+					newPennies = coinWeight / 2.5
+					roundedPennies = round(newPennies)
+					#print roundedPennies
+					pennies += roundedPennies
+					break
 					
-			#writes down the # of each coin in external file
-			f = open("Coins.txt", 'w')
-			f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
+				elif (type == 1):
+					newNickels = coinWeight / 5.0
+					roundedNickels = round(newNickels)
+					#print roundedNickels
+					nickels += roundedNickels
+					break
+					
+				elif (type == 2):
+					newDimes = coinWeight / 2.268
+					roundedDimes = round(newDimes)
+					#print roundedDimes
+					dimes += roundedDimes
+					break
+					
+				else:
+					newQuarters = coinWeight / 11.34
+					roundedQuarters = round(newQuarters)
+					#print roundedQuarters
+					quarters += roundedQuarters
+					break
 
-        hx.power_down()
-        hx.power_up()
-        time.sleep(0.1)
+					
+				#writes down the # of each coin in external file
+				f = open("Coins.txt", 'w')
+				f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
+				f.close()
 
-    except (KeyboardInterrupt, SystemExit):
-        cleanAndExit()
+			elif (newJar < currentJar):
+				#pause for a second to let the coin setle
+				time.sleep(1)
+				# if chenge in weight, calculated the weight of the new addition (the new coin)
+				coinWeight = currentJar - newJar
+		
+				#checks the coinWeight against the weights of each coin type to determine its type
+				#checks in a range of .1 grams away from the expected weight of the coin for expected error
+				if (type == 0):
+					newPennies = coinWeight / 2.5
+					roundedPennies = round(newPennies)
+					#print roundedPennies
+					pennies -= roundedPennies
+					break
+					
+				elif (type == 1):
+					newNickels = coinWeight / 5.0
+					roundedNickels = round(newNickels)
+					#print roundedNickels
+					nickels -= roundedNickels
+					break
+					
+				elif (type == 2):
+					newDimes = coinWeight / 2.268
+					roundedDimes = round(newDimes)
+					#print roundedDimes
+					dimes -= roundedDimes
+					break
+					
+				else:
+					newQuarters = coinWeight / 11.34
+					roundedQuarters = round(newQuarters)
+					#print roundedQuarters
+					quarters -= roundedQuarters
+					break
 
-	#write the # of coins to a external text file if format
-	#penny
-	#nickel
-	#dime
-	#quarter
+					
+				#writes down the # of each coin in external file
+				f = open("Coins.txt", 'w')
+				f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
+				f.close()
+
+			hx.power_down()
+			hx.power_up()
+			time.sleep(0.1)
+
+		except (KeyboardInterrupt, SystemExit):
+			cleanAndExit()
