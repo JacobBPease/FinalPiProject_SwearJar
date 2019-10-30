@@ -69,11 +69,7 @@ def coinCalc(type):
 	#read each line and add it to the list
 	fl = f.readlines()
 	for x in fl:
-		x = x[:(len(x)-1)]
-		str(x)
-		float(x)
-		print x*2
-		Coins.append(x)
+		Coins.append(int(x))
 	#closes file to preserve memory
 	f.close()
 
@@ -98,26 +94,25 @@ def coinCalc(type):
 				#checks in a range of .1 grams away from the expected weight of the coin for expected error
 				if (type == 0):
 					newPennies = coinWeight / 2.5
-					roundedPennies = round(newPennies)
-					print roundedPennies
+					roundedPennies = int(round(newPennies))
 					pennies += roundedPennies
-					
+				
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
-					roundedNickels = round(newNickels)
-					print roundedNickels
+					roundedNickels = int(round(newNickels))
 					nickels += roundedNickels
+					int(roundedNickels)
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 2):
 					newDimes = coinWeight / 2.268
-					roundedDimes = round(newDimes)
-					print roundedDimes
+					roundedDimes = int(round(newDimes))
+					int(roundedDimes)
 					dimes += roundedDimes
 					
 					writeCoins(pennies, nickels, dimes, quarters)
@@ -125,8 +120,8 @@ def coinCalc(type):
 					
 				else:
 					newQuarters = coinWeight / 11.34
-					roundedQuarters = round(newQuarters)
-					print roundedQuarters
+					roundedQuarters = int(round(newQuarters))
+					int(roundedQuarters)
 					quarters += roundedQuarters
 					
 					writeCoins(pennies, nickels, dimes, quarters)
@@ -142,8 +137,7 @@ def coinCalc(type):
 				#checks in a range of .1 grams away from the expected weight of the coin for expected error
 				if (type == 0):
 					newPennies = coinWeight / 2.5
-					roundedPennies = round(newPennies)
-					print roundedPennies
+					roundedPennies = int(round(newPennies))
 					pennies -= roundedPennies
 					
 					writeCoins(pennies, nickels, dimes, quarters)
@@ -151,8 +145,7 @@ def coinCalc(type):
 					
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
-					roundedNickels = round(newNickels)
-					print roundedNickels
+					roundedNickels = int(round(newNickels))
 					nickels -= roundedNickels
 					
 					writeCoins(pennies, nickels, dimes, quarters)
@@ -160,8 +153,7 @@ def coinCalc(type):
 					
 				elif (type == 2):
 					newDimes = coinWeight / 2.268
-					roundedDimes = round(newDimes)
-					print roundedDimes
+					roundedDimes = int(round(newDimes))
 					dimes -= roundedDimes
 					
 					writeCoins(pennies, nickels, dimes, quarters)
@@ -169,8 +161,7 @@ def coinCalc(type):
 					
 				else:
 					newQuarters = coinWeight / 11.34
-					roundedQuarters = round(newQuarters)
-					print roundedQuarters
+					roundedQuarters = int(round(newQuarters))
 					quarters -= roundedQuarters
 					
 					writeCoins(pennies, nickels, dimes, quarters)

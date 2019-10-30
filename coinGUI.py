@@ -30,7 +30,7 @@ class App(Frame):
 		self.buttonRemove.pack(side=RIGHT, fill=Y)
 			
 	def openCoinsFile(self, type):
-		'''#opens file
+		#opens file
 		f= open("Coins.txt", 'r')
 		#initialize the list
 		Coins = []
@@ -41,10 +41,6 @@ class App(Frame):
 		#closes file to preserve memory
 		f.close()
 		
-		with open('Coins.txt') as f:
-		w, h = [int(x) for x in next(f).split()]
-		Coins = [[int(x) for x in line.split()] for line in f]'''
-		Coins = [100, 20, 10, 4]
 		return Coins[type]
 			
 	def display(self, type):
