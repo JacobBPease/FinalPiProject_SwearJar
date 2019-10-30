@@ -102,22 +102,24 @@ class Prompt(Frame):
 	def __init__(self, master, function): # function serves as 1 or 0 to rep add or remove 
 		Frame.__init__(self, master)
 		self.function = function
-		self.createPrompt(master)
+		self.createPrompt(master, function)
 		
-	def createPrompt(self, master):
-		self.prompt = Label(master, text='Please select which type of coin you would like to add or remove.')
+	def createPrompt(self, master, function):
+		self.prompt = Label(master, text='Please select which type of coin you would like to remove.')
 		self.prompt.grid(row=0, column=0, columnspan=4)
+		if (function):
+			self.prompt['text'] = 'Please select which type of coin you would like to add.'
 	
-		self.buttonPenny = Button(master, text='Penny', command=lambda: self.calc(0))
+		self.buttonPenny = Button(master, text='Penny', command=lambda: self.calc(0, function))
 		self.buttonPenny.grid(row=1, column=0)
 		
-		self.buttonNickel = Button(master, text='Nickel', command=lambda: self.calc(1))
+		self.buttonNickel = Button(master, text='Nickel', command=lambda: self.calc(1, function))
 		self.buttonNickel.grid(row=1, column=1)
 		
-		self.buttonDime = Button(master, text='Dime', command=lambda: self.calc(2))
+		self.buttonDime = Button(master, text='Dime', command=lambda: self.calc(2, function))
 		self.buttonDime.grid(row=1, column=2)
 		
-		self.buttonQuarter = Button(master, text='Quarter', command=lambda: self.calc(3))
+		self.buttonQuarter = Button(master, text='Quarter', command=lambda: self.calc(3, function))
 		self.buttonQuarter.grid(row=1, column=3)
 		
 		
@@ -127,8 +129,8 @@ class Prompt(Frame):
 		n = importTest.coinCheck(50, type)
 		return n
 		
-	def calc(self, type):
-		coinCheck.coinCalc(type)
+	def calc(self, type, function):
+		coinCheck.coinCalc(type, function)
 
 		
 		

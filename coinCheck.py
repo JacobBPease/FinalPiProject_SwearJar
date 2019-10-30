@@ -58,7 +58,7 @@ print("Tare done! Add weight now...")
 
 #add function to calc # of coins of a certain type added
 #type determined by #, 0-penny:1-nickel:2-dime:3-quarter
-def coinCalc(type):
+def coinCalc(type, function):
 
 	#takes in the weight of the coin jar as a reference
 	currentJar = hx.get_weight(5)
@@ -84,7 +84,7 @@ def coinCalc(type):
 		try:
 			#starts the loop by checking the new weight relative to the initial
 			newJar = hx.get_weight(5)
-			if (newJar > currentJar):
+			if (function):
 				#pause for a second to let the coin setle
 				time.sleep(1)
 				# if chenge in weight, calculated the weight of the new addition (the new coin)
@@ -127,7 +127,7 @@ def coinCalc(type):
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
 
-			elif (newJar < currentJar):
+			else:
 				#pause for a second to let the coin setle
 				time.sleep(1)
 				# if chenge in weight, calculated the weight of the new addition (the new coin)
