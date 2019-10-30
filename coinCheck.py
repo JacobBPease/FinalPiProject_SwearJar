@@ -6,6 +6,7 @@
 
 import time
 import sys
+from Tkinter import *
 
 EMULATE_HX711=True
 
@@ -58,6 +59,7 @@ print("Tare done! Add weight now...")
 #add function to calc # of coins of a certain type added
 #type determined by #, 0-penny:1-nickel:2-dime:3-quarter
 def coinCalc(type):
+
 	#takes in the weight of the coin jar as a reference
 	currentJar = hx.get_weight(5)
 	#open file
@@ -67,7 +69,11 @@ def coinCalc(type):
 	#read each line and add it to the list
 	fl = f.readlines()
 	for x in fl:
-		Coins.append(int(x))
+		x = x[:(len(x)-1)]
+		str(x)
+		float(x)
+		print x*2
+		Coins.append(x)
 	#closes file to preserve memory
 	f.close()
 
@@ -93,36 +99,38 @@ def coinCalc(type):
 				if (type == 0):
 					newPennies = coinWeight / 2.5
 					roundedPennies = round(newPennies)
-					#print roundedPennies
+					print roundedPennies
 					pennies += roundedPennies
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
 					roundedNickels = round(newNickels)
-					#print roundedNickels
+					print roundedNickels
 					nickels += roundedNickels
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 2):
 					newDimes = coinWeight / 2.268
 					roundedDimes = round(newDimes)
-					#print roundedDimes
+					print roundedDimes
 					dimes += roundedDimes
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				else:
 					newQuarters = coinWeight / 11.34
 					roundedQuarters = round(newQuarters)
-					#print roundedQuarters
+					print roundedQuarters
 					quarters += roundedQuarters
-					break
-
 					
-				#writes down the # of each coin in external file
-				f = open("Coins.txt", 'w')
-				f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
-				f.close()
+					writeCoins(pennies, nickels, dimes, quarters)
+					break
 
 			elif (newJar < currentJar):
 				#pause for a second to let the coin setle
@@ -135,36 +143,38 @@ def coinCalc(type):
 				if (type == 0):
 					newPennies = coinWeight / 2.5
 					roundedPennies = round(newPennies)
-					#print roundedPennies
+					print roundedPennies
 					pennies -= roundedPennies
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
 					roundedNickels = round(newNickels)
-					#print roundedNickels
+					print roundedNickels
 					nickels -= roundedNickels
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				elif (type == 2):
 					newDimes = coinWeight / 2.268
 					roundedDimes = round(newDimes)
-					#print roundedDimes
+					print roundedDimes
 					dimes -= roundedDimes
+					
+					writeCoins(pennies, nickels, dimes, quarters)
 					break
 					
 				else:
 					newQuarters = coinWeight / 11.34
 					roundedQuarters = round(newQuarters)
-					#print roundedQuarters
+					print roundedQuarters
 					quarters -= roundedQuarters
-					break
-
 					
-				#writes down the # of each coin in external file
-				f = open("Coins.txt", 'w')
-				f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
-				f.close()
+					writeCoins(pennies, nickels, dimes, quarters)
+					break
 
 			hx.power_down()
 			hx.power_up()
@@ -172,3 +182,10 @@ def coinCalc(type):
 
 		except (KeyboardInterrupt, SystemExit):
 			cleanAndExit()
+
+#function that writes the new values to the external coins file
+def writeCoins(pennies, nickels, dimes, quarters):
+	f = open("Coins.txt", 'w')
+	f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
+	f.close()
+
