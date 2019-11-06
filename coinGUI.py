@@ -8,16 +8,16 @@ class App(Frame):
 		
 		
 	def createMain(self, master):	
-		self.buttonPenny = Button(master, text="Pennies", command=lambda: self.display('pennies'))
+		self.buttonPenny = Button(master, text="Pennies", command=lambda: self.display(0))
 		self.buttonPenny.pack(side=TOP, fill=X)
 		
-		self.buttonNickel = Button(master, text="Nickels", command=lambda: self.display('nickels'))
+		self.buttonNickel = Button(master, text="Nickels", command=lambda: self.display(1))
 		self.buttonNickel.pack(side=TOP, fill=X)
 		
-		self.buttonDime = Button(master, text="Dimes", command=lambda: self.display('dimes'))
+		self.buttonDime = Button(master, text="Dimes", command=lambda: self.display(2))
 		self.buttonDime.pack(side=TOP, fill=X)
 		
-		self.buttonQuarter = Button(master, text="Quarters", command=lambda: self.display('quarters'))
+		self.buttonQuarter = Button(master, text="Quarters", command=lambda: self.display(3))
 		self.buttonQuarter.pack(side=TOP, fill=X)
 		
 		self.buttonTotal = Button(master, text="Total Amount", command=lambda: self.display('t'))
@@ -33,49 +33,48 @@ class App(Frame):
 		#opens file
 		f= open("Coins.txt", 'r')
 		#initialize the list
-		Values = []
+		Coins = []
 		#read each line and add it to the list
 		fl = f.readlines()
 		for x in fl:
-			Values.append(int(x))
-		#transfers values into a coins dictionary for ease of access
-		Coins = {}
-		Coins['pennies'] = Values[0]
-		Coins['nickels'] = Values[1]
-		Coins['dimes'] = Values[2]
-		Coins['quarters'] = Values[3]
+			Coins.append(int(x))
+		#stores list in local variables for accessibility
+		pennies = Coins[0]
+		nickels = Coins[1]
+		dimes = Coins[2]
+		quarters = Coins[3]
 		#closes file to preserve memory
 		f.close()
 		
 		return Coins[type]
 			
 	def display(self, type):
-		if (type == 'pennies'):
-			penny = self.openCoinsFile('pennies') 
+		if (type == 0):
+			penny = self.openCoinsFile(0) 
 			# zero to tell which index from Coins list to return, in this case penny.
 			if (self.buttonPenny['text'] == 'Pennies'):
 				self.buttonPenny.configure(text = "{}".format(penny))
 			else:
 				self.buttonPenny.configure(text = "Pennies")
 		
-		elif (type == 'nickels'):
-			nickel = self.openCoinsFile('nickels')
+		elif (type == 1):
+			nickel = self.openCoinsFile(1)
 			#1 = nickel's index in Coins list
 			if (self.buttonNickel['text'] == 'Nickels'):
 				self.buttonNickel.configure(text = "{}".format(nickel))
 			else:
 				self.buttonNickel.configure(text = "Nickels")		
 			
-		elif (type == 'dimes'):
-			dime = self.openCoinsFile('dimes')
+		elif (type == 2):
+			dime = self.openCoinsFile(2)
 			#2 = dime value index in Coins list
 			if (self.buttonDime['text'] == 'Dimes'):
 				self.buttonDime.configure(text = "{}".format(dime))
 			else:
 				self.buttonDime.configure(text = "Dimes")
 
-		elif (type == 'quarters'):
-			quarter = self.openCoinsFile('quarters')
+		elif (type == 3):
+			quarter = self.openCoinsFile(3)
 			#3 = quarter value index in Coins list
 			if (self.buttonQuarter['text'] == 'Quarters'):
 				self.buttonQuarter.configure(text = "{}".format(quarter))
@@ -84,10 +83,10 @@ class App(Frame):
 
 		else: #only other option is total
 			#imports all values if list Coins
-			penny = self.openCoinsFile('pennies') 
-			nickel = self.openCoinsFile('nickels')
-			dime = self.openCoinsFile('dimes')
-			quarter = self.openCoinsFile('quarters')
+			penny = self.openCoinsFile(0) 
+			nickel = self.openCoinsFile(1)
+			dime = self.openCoinsFile(2)
+			quarter = self.openCoinsFile(3)
 			total = 0
 		
 			float(total)

@@ -56,7 +56,11 @@ print("Tare done! Add weight now...")
 #hx.tare_A()
 #hx.tare_B()
 
-
+class Stall(Frame):
+	def __init__(self, master):
+		Frame.__init__(self, master)
+		self.stallButton = Button(master, text="Add or remove coins of your selected type, and then close this, and the previous selection window.")
+		self.stallButton.pack()
 
 #add function to calc # of coins of a certain type added
 #type determined by #, 0-penny:1-nickel:2-dime:3-quarter
@@ -67,21 +71,24 @@ def coinCalc(type, function):
 	#open file
 	f= open("Coins.txt", 'r')
 	#initialize the dictionary
-	Values = []
+	Coins = []
 	#read each line and add it to the list
 	fl = f.readlines()
 	for x in fl:
-		Values.append(int(x))
-	#transfers values into a coins dictionary for ease of access
-	Coins = {}
-	Coins['pennies'] = Values[0]
-	Coins['nickels'] = Values[1]
-	Coins['dimes'] = Values[2]
-	Coins['quarters'] = Values[3]
+		Coins.append(int(x))
+	#stores list in local variables for accessibility
+	pennies = Coins[0]
+	nickels = Coins[1]
+	dimes = Coins[2]
+	quarters = Coins[3]
 	#closes file to preserve memory
 	f.close()
 
 	#"stall" window serves to give the user as much time as they need to add/ remove coins and let them settle
+
+        window = Tk()
+        stall = Stall(window)
+        window.mainloop()
 
 	while True:
 		try:
@@ -98,7 +105,7 @@ def coinCalc(type, function):
 				if (type == 0):
 					newPennies = coinWeight / 2.5
 					roundedPennies = int(round(newPennies))
-					Coins['pennies'] += roundedPennies
+					pennies += roundedPennies
 				
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -106,7 +113,7 @@ def coinCalc(type, function):
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
 					roundedNickels = int(round(newNickels))
-					Coins['nickels'] += roundedNickels
+					nickels += roundedNickels
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -115,7 +122,7 @@ def coinCalc(type, function):
 					newDimes = coinWeight / 2.268
 					roundedDimes = int(round(newDimes))
 					int(roundedDimes)
-					Coins['dimes'] += roundedDimes
+					dimes += roundedDimes
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -124,7 +131,7 @@ def coinCalc(type, function):
 					newQuarters = coinWeight / 11.34
 					roundedQuarters = int(round(newQuarters))
 					int(roundedQuarters)
-					Coins['quarters'] += roundedQuarters
+					quarters += roundedQuarters
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -140,7 +147,7 @@ def coinCalc(type, function):
 				if (type == 0):
 					newPennies = coinWeight / 2.5
 					roundedPennies = int(round(newPennies))
-					Coins['pennies'] -= roundedPennies
+					pennies -= roundedPennies
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -148,7 +155,7 @@ def coinCalc(type, function):
 				elif (type == 1):
 					newNickels = coinWeight / 5.0
 					roundedNickels = int(round(newNickels))
-					Coins['nickels'] -= roundedNickels
+					nickels -= roundedNickels
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -156,7 +163,7 @@ def coinCalc(type, function):
 				elif (type == 2):
 					newDimes = coinWeight / 2.268
 					roundedDimes = int(round(newDimes))
-					Coins['dimes'] -= roundedDimes
+					dimes -= roundedDimes
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -164,7 +171,7 @@ def coinCalc(type, function):
 				else:
 					newQuarters = coinWeight / 11.34
 					roundedQuarters = int(round(newQuarters))
-					Coins['quarters'] -= roundedQuarters
+					quarters -= roundedQuarters
 					
 					writeCoins(pennies, nickels, dimes, quarters)
 					break
@@ -179,6 +186,6 @@ def coinCalc(type, function):
 #function that writes the new values to the external coins file
 def writeCoins(pennies, nickels, dimes, quarters):
 	f = open("Coins.txt", 'w')
-	f.write("{}\n{}\n{}\n{}".format(Coins['pennies'], Coins['nickels'], Coins['dimes'], Coins['quarters']))
+	f.write("{}\n{}\n{}\n{}".format(pennies, nickels, dimes, quarters))
 	f.close()
 
