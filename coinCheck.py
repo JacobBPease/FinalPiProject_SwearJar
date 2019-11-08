@@ -8,9 +8,14 @@ import time
 import sys
 from Tkinter import *
 
-EMULATE_HX711=True
+EMULATE_HX711=False
 
-referenceUnit = 1
+referenceUnit = -42
+
+#wait_time is the time in seconds that the sensor waits for the coins to be
+#added/removed.
+#default is 10 seconds.
+wait_time = 10
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
@@ -85,13 +90,13 @@ def coinCalc(type, function):
 	f.close()
 
 	#"stall" window serves to give the user as much time as they need to add/ remove coins and let them settle
-
-        window = Tk()
-        stall = Stall(window)
-        window.mainloop()
+	#window = Tk()
+	#stall = Stall(window)
+	#window.mainloop()
 
 	while True:
 		try:
+                        time.sleep(wait_time)
 			#starts the loop by checking the new weight relative to the initial
 			newJar = hx.get_weight(5)
 			if (function):
@@ -103,7 +108,7 @@ def coinCalc(type, function):
 				#checks the coinWeight against the weights of each coin type to determine its type
 				#checks in a range of .1 grams away from the expected weight of the coin for expected error
 				if (type == 0):
-					newPennies = coinWeight / 2.5
+					newPennies = coinWeight / 25.0
 					roundedPennies = int(round(newPennies))
 					pennies += roundedPennies
 				
@@ -111,7 +116,7 @@ def coinCalc(type, function):
 					break
 					
 				elif (type == 1):
-					newNickels = coinWeight / 5.0
+					newNickels = coinWeight / 50.0
 					roundedNickels = int(round(newNickels))
 					nickels += roundedNickels
 					
@@ -119,7 +124,7 @@ def coinCalc(type, function):
 					break
 					
 				elif (type == 2):
-					newDimes = coinWeight / 2.268
+					newDimes = coinWeight / 22.7
 					roundedDimes = int(round(newDimes))
 					int(roundedDimes)
 					dimes += roundedDimes
@@ -128,7 +133,7 @@ def coinCalc(type, function):
 					break
 					
 				else:
-					newQuarters = coinWeight / 11.34
+					newQuarters = coinWeight / 56.7
 					roundedQuarters = int(round(newQuarters))
 					int(roundedQuarters)
 					quarters += roundedQuarters
@@ -145,7 +150,7 @@ def coinCalc(type, function):
 				#checks the coinWeight against the weights of each coin type to determine its type
 				#checks in a range of .1 grams away from the expected weight of the coin for expected error
 				if (type == 0):
-					newPennies = coinWeight / 2.5
+					newPennies = coinWeight / 25.0
 					roundedPennies = int(round(newPennies))
 					pennies -= roundedPennies
 					
@@ -153,7 +158,7 @@ def coinCalc(type, function):
 					break
 					
 				elif (type == 1):
-					newNickels = coinWeight / 5.0
+					newNickels = coinWeight / 50.0
 					roundedNickels = int(round(newNickels))
 					nickels -= roundedNickels
 					
@@ -161,7 +166,7 @@ def coinCalc(type, function):
 					break
 					
 				elif (type == 2):
-					newDimes = coinWeight / 2.268
+					newDimes = coinWeight / 22.7
 					roundedDimes = int(round(newDimes))
 					dimes -= roundedDimes
 					
@@ -169,7 +174,7 @@ def coinCalc(type, function):
 					break
 					
 				else:
-					newQuarters = coinWeight / 11.34
+					newQuarters = coinWeight / 56.7
 					roundedQuarters = int(round(newQuarters))
 					quarters -= roundedQuarters
 					

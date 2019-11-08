@@ -3,15 +3,16 @@
 import time
 import sys
 
-EMULATE_HX711=True
+EMULATE_HX711=False
 
-referenceUnit = 1
+referenceUnit = -42
 
 if not EMULATE_HX711:
     import RPi.GPIO as GPIO
     from hx711 import HX711
 else:
     from emulated_hx711 import HX711
+
 
 def cleanAndExit():
     print("Cleaning...")
@@ -57,9 +58,9 @@ while True:
         # for the first parameter of "hx.set_reading_format("LSB", "MSB")".
         # Comment the two lines "val = hx.get_weight(5)" and "print val" and uncomment these three lines to see what it prints.
         
-        # np_arr8_string = hx.get_np_arr8_string()
-        # binary_string = hx.get_binary_string()
-        # print binary_string + " " + np_arr8_string
+        #np_arr8_string = hx.get_np_arr8_string()
+        #binary_string = hx.get_binary_string()
+        #print binary_string + " " + np_arr8_string
         
         # Prints the weight. Comment if you're debbuging the MSB and LSB issue.
         val = hx.get_weight(5)

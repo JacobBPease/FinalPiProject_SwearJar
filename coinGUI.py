@@ -20,12 +20,9 @@ class MainGUI(Frame):
         f = open("Coins.txt", 'r')
         #initialize the list
         Coins = []
-##        #read each line and add it to the list
-##        fl = f.readlines() # I'm almost 100% sure we don't need this because the loop is doing the appending but we'll see later..
-##        for x in fl:
-##            Coins.append(int(x))
-        # testing // really just trying to minimize and clean up code a bit
-        for x in f:
+        #read each line and add it to the list
+        fl = f.readlines() # It needed to look at f1 because f.readlines puts the file into a list format, meaning we can append it properly 
+        for x in fl:
             Coins.append(int(x))
         #stores list in local variables for accessibility
         pennies = Coins[0]
@@ -57,7 +54,7 @@ class MainGUI(Frame):
         # not repetition, just keeping another reference because tkinter loses the image
         self.buttonPenny.image = pennyImage
         self.buttonPenny.grid(row=0, column=0, sticky=N+S+E+W)
-        self.buttonPenny.pack(fill=BOTH)
+        #self.buttonPenny.pack(fill=BOTH)
 
         # Nickel button
         nickel = PhotoImage(file="images/nickel.gif")
@@ -66,7 +63,7 @@ class MainGUI(Frame):
         # same thing, just another reference
         self.buttonNickel.image = nickelImage
         self.buttonNickel.grid(row=1, column=0, sticky=N+S+E+W)
-        self.buttonNickel.pack(fill=BOTH)
+        #self.buttonNickel.pack(fill=BOTH)
 
         # Dime button
         dime = PhotoImage(file="images/dime.gif")
@@ -75,7 +72,7 @@ class MainGUI(Frame):
         # same thinggg
         self.buttonDime.image = dimeImage
         self.buttonDime.grid(row=2, column=0, sticky=N+S+E+W)
-        self.buttonDime.pack(fill=BOTH)
+        #self.buttonDime.pack(fill=BOTH)
 
         # Quarter button
         quarter = PhotoImage(file="images/quarter.gif")
@@ -83,22 +80,22 @@ class MainGUI(Frame):
         self.buttonQuarter = Button(master, text="Quarters", bg="white", image=quarterImage, compound=LEFT, borderwidth=1, font=("Elephant", 20), command=lambda: self.display(3))
         self.buttonQuarter.image = quarterImage
         self.buttonQuarter.grid(row=3, column=0, sticky=N+S+E+W)
-        self.buttonQuarter.pack(fill=BOTH)
+        #self.buttonQuarter.pack(fill=BOTH)
 
         # Total amount button
         self.buttonTotal = Button(master, text="Total Amount", borderwidth=1, font=("Elephant", 25), command=lambda: self.display('t'))
         self.buttonTotal.grid(row=3, column=2, sticky=N+S+E+W)
-        self.buttonTotal.pack(side=BOTTOM, fill=BOTH)
+        #self.buttonTotal.pack(side=BOTTOM, fill=BOTH)
 
         # Add button
         self.buttonAdd = Button(master, text="Add", borderwidth=1, font=("Elephant", 25), command=lambda: self.Prompt(1))
         self.buttonAdd.grid(row=0, column=2, sticky=N+S+E+W)
-        self.buttonAdd.pack(side=LEFT, fill=BOTH)
+        #self.buttonAdd.pack(side=LEFT, fill=BOTH)
 
         # Remove button
         self.buttonRemove = Button(master, text="Remove", borderwidth=1, font=("Elephant", 25), command=lambda: self.Prompt(0))
         self.buttonRemove.grid(row=3, column=2, rowspan=2, columnspan=2, sticky=N+S+E+W)
-        self.buttonRemove.pack(side=RIGHT, fill=BOTH)
+        #self.buttonRemove.pack(side=RIGHT, fill=BOTH)
 
 
 #  function to set variables from the text file equal to their respective coin		
